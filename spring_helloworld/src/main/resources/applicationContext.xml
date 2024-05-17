@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--
+    bean:将对象交给IOC容器管理
+    属性：
+    id:bean的唯一标识，不能重复
+    class:设置bean对象所对应的类型
+    -->
+    <!--扫描组件-->
+    <context:component-scan base-package="com.free.spring"></context:component-scan>
+    <!--开启基于注解的aop-->
+    <aop:aspectj-autoproxy/>
+    <bean id="helloworld" class="com.free.spring.pojo.HelloWorld"></bean>
+    <bean id="studentOne" class="com.free.spring.pojo.Student" scope="prototype">
+        <property name="sid" value="1"></property>
+        <property name="sname" value="xx"></property>
+        <property name="age" value="12"></property>
+        <property name="gender" value="男"></property>
+    </bean>
+    <bean id="studentTwo" class="com.free.spring.pojo.Student" scope="prototype">
+        <constructor-arg name="sid" value="2"></constructor-arg>
+        <constructor-arg name="sname" value="王二"></constructor-arg>
+        <constructor-arg name="age" value="13"></constructor-arg>
+        <constructor-arg name="gender" value="男"></constructor-arg>
+    </bean>
+
+    <bean id="studentThree" class="com.free.spring.pojo.Student" scope="prototype">
+        <property name="sid" value="2"></property>
+        <property name="sname" value="王五"></property>
+        <property name="age" value="55"></property>
+        <property name="gender" value="男"></property>
+        <property name="clazz" ref="clazzOne"></property>
+    </bean>
+    <bean id="clazzOne" class="com.free.spring.pojo.Clazz">
+        <property name="cid" value="1112"></property>
+        <property name="cname" value="A"></property>
+        <property name="students">
+            <list>
+                <ref bean="studentOne"></ref>
+                <ref bean="studentTwo"></ref>
+            </list>
+        </property>
+    </bean>
+    <!--<bean id="userController" class="com.free.spring.controller.UserController" autowire="byType"></bean>-->
+
+
+    <!--<bean id="userController2" class="com.free.spring.controller.UserController" autowire="byType">
+        &lt;!&ndash;<property name="userService" ref="userService"></property>&ndash;&gt;
+    </bean>-->
+   <!-- <bean id="userService" class="com.free.spring.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"></property>
+    </bean>-->
+
+<!--
+    <bean id="userDao" class="com.free.spring.dao.impl.UserDaoImpl"></bean>
+-->
+
+    <!--aop的注意事项
+    切面类和目标类都需要交给ioc容器管理
+    通过aspect设置一个切面类-->
+    <aop:config>
+        <!--设置一个公共的切入点表达式-->
+        <aop:pointcut id="pointCut" expression="execution(* com.free.spring.proxy.CalculatorImpl.*(..))"/>
+        <!--将ioc容器的某个bean设置为切面-->
+        <aop:aspect ref="loggerAspect">
+            <aop:before method="beforeAdvice" pointcut-ref="pointCut"></aop:before>
+            <aop:after method="afterAdvice" pointcut-ref="pointCut"></aop:after>
+            <aop:after-returning method="afterReturningAdvice" pointcut-ref="pointCut" returning="result"></aop:after-returning>
+            <aop:after-throwing method="afterThrowingAdvice" pointcut-ref="pointCut" throwing="e"></aop:after-throwing>
+            <aop:around method="aroundAdvice" pointcut-ref="pointCut"></aop:around>
+        </aop:aspect>
+        <aop:aspect ref="validateAspect" order="1">
+            <aop:before method="before" pointcut-ref="pointCut"></aop:before>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

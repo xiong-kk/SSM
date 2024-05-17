@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--MyBatis3Simple简单版
+        MyBatis3复杂版
+    -->
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--数据库连接信息-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/ssm?characterEncoding=utf-8"
+                        userId="root"
+                        password="root">
+
+        </jdbcConnection>
+        <!--javaBean生成策略-->
+        <javaModelGenerator targetPackage="com.free.mybatis.pojo" targetProject=".\src\main\java">
+            <!--允许使用子包-->
+            <property name="enableSubPackages" value="true"/>
+            <!--去掉字段前后的空格-->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--映射文件生成策略-->
+        <sqlMapGenerator targetPackage="com.free.mybatis.mapper" targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.free.mybatis.mapper" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+
+        </javaClientGenerator>
+        <!--指定表生成的实体类的类名-->
+        <table tableName="t_emp" domainObjectName="Emp3"/>
+        <table tableName="t_dept" domainObjectName="Dept3"/>
+
+    </context>
+</generatorConfiguration>

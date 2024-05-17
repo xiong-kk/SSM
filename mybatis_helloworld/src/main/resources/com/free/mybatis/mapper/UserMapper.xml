@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace写明对应的操作类-->
+<mapper namespace="com.free.mybatis.mapper.UserMapper">
+
+
+    <!-- int insertUser(User user)-->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user values(null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+    <!--id为对应的的方法    User getUserByUsername(String username)-->
+    <select id="getUserByUsername" resultType="User">
+        select * from t_user where username=#{username}
+    </select>
+    <!--    User checkLogin(String username,String password)-->
+    <select id="checkLogin" resultType="User">
+        select * from t_user where username=#{param1} and password=#{param2}
+    </select>
+    <!--    User getUserByLike(String username)-->
+    <select id="getUserByLike" resultType="User">
+<!--        select * from t_user where username like'%${mohu}%'-->
+<!--        select * from t_user where username like concat('%',#{mohu},'%')-->
+        select * from t_user where username like "%"#{mohu}"%"
+    </select>
+    <!--    void deleteMoreUser(@Param("ids") String ids)-->
+    <delete id="deleteMoreUser">
+        delete from t_user where id in(${ids})
+    </delete>
+</mapper>

@@ -22,7 +22,7 @@ public class SqlSessionUtil {
             SqlSessionFactoryBuilder sqlSessionFactoryBuilder=new SqlSessionFactoryBuilder();
             //获取sqlSessionFactory对象
             SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(is);
-            //获取sql的会话对象sqlSession
+            //获取sql的会话对象sqlSession，传入参数true代表事务自动提交
             sqlSession = sqlSessionFactory.openSession(true);
         } catch (IOException e) {
             e.printStackTrace();

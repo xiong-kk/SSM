@@ -2,9 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--namespace写明对应的操作类-->
+<!--namespace写明对应的操作类的全类名-->
 <mapper namespace="com.free.mybatis.mapper.UserMapper">
-
+    <!--
+        mapper接口的全类名和映射文件的namespace一致
+        mapper接口中的方法的方法名要和映射文件的sql的id一致
+    -->
 
     <!-- int insertUser(User user)-->
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">

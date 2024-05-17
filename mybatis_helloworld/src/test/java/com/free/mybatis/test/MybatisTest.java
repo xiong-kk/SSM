@@ -189,4 +189,26 @@ public class MybatisTest {
         list.forEach(System.out::println);
         System.out.println(pageInfo);
     }
+
+    @Test
+    public void testInsert() throws IOException {
+        //获取核心配置文件的输入流
+        InputStream resourceAsStream = Resources.getResourceAsStream("mybatis-config.xml");
+        //获取SqlSessionFactoryBuilder对象
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder=new SqlSessionFactoryBuilder();
+        //获取SqlSessionFactory对象
+        SqlSessionFactory sqlSessionFactory=sqlSessionFactoryBuilder.build(resourceAsStream);
+        //获取sql的会话对象sqlSession，传入true参数表示自动提交事务
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+        //获取UserMapper的代理实现类对象
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        //钓鱼mapper接口中的方法来实现具体功能
+        int result = mapper.insertUser(new User());
+        System.out.println(result);
+        //提交事务，默认不会提交
+        //sqlSession.commit();
+        sqlSession.close();
+    }
+
+    
 }

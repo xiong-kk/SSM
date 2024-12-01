@@ -22,7 +22,9 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author free
@@ -35,9 +37,10 @@ public class MybatisTest {
     public void testInsertUser(){
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        User user=new User(null,"h2","123",18,"男","1@qq.com");
+        User user=new User(null,"free","123",18,"男","1@qq.com");
         int a=mapper.insertUser(user);
         System.out.println(user);
+        sqlSession.close();
     }
 
     @Test
@@ -52,7 +55,18 @@ public class MybatisTest {
     public void testCheckLogin(){
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        User user=mapper.checkLogin("root","123456");
+        User user=mapper.checkLogin("root","123");
+        System.out.println(user);
+    }
+
+    @Test
+    public void testCheckLoginByMap(){
+        SqlSession sqlSession=SqlSessionUtil.getSqlSession();
+        UserMapper mapper=sqlSession.getMapper(UserMapper.class);
+        Map<String,Object> map=new HashMap<>();
+        map.put("username","admin");
+        map.put("password","123456");
+        User user=mapper.checkLoginByMap(map);
         System.out.println(user);
     }
 

@@ -17,9 +17,15 @@
     <select id="getUserByUsername" resultType="User">
         select * from t_user where username=#{username}
     </select>
+
+
     <!--    User checkLogin(String username,String password)-->
     <select id="checkLogin" resultType="User">
         select * from t_user where username=#{param1} and password=#{param2}
+    </select>
+
+    <select id="checkLoginByMap" resultType="User">
+        select * from t_user where username=#{username} and password=#{password}
     </select>
     <!--    User getUserByLike(String username)-->
     <select id="getUserByLike" resultType="User">

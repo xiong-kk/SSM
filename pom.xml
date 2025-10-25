@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>spring_helloworld</module>
-        <module>spring_ioc_annotation</module>
         <module>mybatis_helloworld</module>
         <module>mvc_helloworld</module>
         <module>ssm</module>

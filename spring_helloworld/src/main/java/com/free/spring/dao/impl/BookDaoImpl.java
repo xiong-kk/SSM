@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BookDaoImpl implements BookDao {
 
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
     @Override
